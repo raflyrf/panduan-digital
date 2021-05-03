@@ -1,0 +1,38 @@
+.side-nav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    background-color: #0061A8;
+    /* overflow-x: hidden; */
+    /* padding-top: 20px; */
+}
+
+.dashboard-view {
+    margin-left: 200px;
+    margin-top: 40px;
+}
+
+.matakuliah-view {
+    margin-left: 200px;
+    margin-top: 40px;
+}
+
+.upper-view {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .side-nav {
+        width: 140px;
+    }
+
+    .dashboard-view {
+        margin-left: 140px;
+    }
+
+    .matakuliah-view {
+        margin-left: 140px;
+    }
+}
