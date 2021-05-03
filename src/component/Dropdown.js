@@ -84,7 +84,7 @@ const Dropdown = () => {
             <Divider className={classes.divider} />
             <div className={classes.show}>
                 Tabel Mata kuliahnya disini nih
-                ihihi
+                ihihi dasadsdasdaf
             </div>
         </React.Fragment>
     );
