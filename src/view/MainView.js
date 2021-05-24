@@ -8,6 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import PaperDashboard from '../component/PaperDashboard';
 import PaperShow from '../component/PaperShow';
+import { Typography } from '@material-ui/core';
 
 const dummy = {
     jumlahElektif: 3,
@@ -17,12 +18,75 @@ const dummy = {
 
 const matakuliah = [
     {
+        id:1,
         nama: "KOM#@#"
     },
     {
+        id:2,
         nama: "KO@3"
     },
     {
+        id:3,
+        nama: "KOMqw@#"
+    },
+    {
+        id:4,
+        nama: "KOMqw@#"
+    },
+    {
+        id:5,
+        nama: "KOMqw@#"
+    },
+    {
+        id:6,
+        nama: "KOMqw@#"
+    },
+    {
+        id:7,
+        nama: "KOMqw@#"
+    },
+    {
+        id:8,
+        nama: "KOMqw@#"
+    },
+    {
+        id:9,
+        nama: "KOMqw@#"
+    },
+    {
+        id:10,
+        nama: "KOMqw@#"
+    },
+    {
+        id:11,
+        nama: "KOMqw@#"
+    },
+    {
+        id:12,
+        nama: "KOMqw@#"
+    },
+    {
+        id:13,
+        nama: "KOMqw@#"
+    },
+    {
+        id:14,
+        nama: "KOMqw@#"
+    },
+    {
+        id:15,
+        nama: "KOMqw@#"
+    },
+    {
+        id:16,
+        nama: "KOMqw@#"
+    },
+    {
+        id:17,
+        nama: "KOMqw@#"
+    },
+    {
+        id:18,
         nama: "KOMqw@#"
     }
 ]
@@ -58,26 +122,35 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const MainView = () => {
+const MainView = (props) => {
     const classes = useStyles();
+    // console.log(props.location.state.username)
+    const usernameFromLogin = props.location.state.username
 
     return(
-        <React.Fragment>
+        <div>
             <Header />
             <div className="side-nav">
-                {/* <ul>
-                    <li><Link to="/" style={link}>Dashboard</Link></li>
-                    <li><Link to="/matakuliah" style={link}>Mata Kuliah</Link></li>
-                </ul> */}
                 <div className={classes.root}>
                     <List component="nav" aria-label="secondary mailbox folders">
-                        <Link to="/" style={link}>
+                        <Link to={{
+                            pathname: "/dashboard",
+                            state: {username: usernameFromLogin}
+                        }}  
+                            style={link}>
+
                             <ListItem button>
                                     <ListItemText primary="Dashboard" />
                             </ListItem>
                         </Link>
                         
-                        <Link to="/matakuliah" style={link}>
+                        <Link to={{
+                            pathname: "/matakuliah",
+                            state: {username: usernameFromLogin}
+                        }} 
+                            
+                            style={link}>
+                            
                             <ListItem button>
                                     <ListItemText primary="Mata Kuliah" />
                             </ListItem>
@@ -93,13 +166,13 @@ const MainView = () => {
                     <PaperDashboard title="Semester saat ini" counter={dummy.semester}/>
                 </div>
                 <div className={classes.show}>
-                    <PaperShow title="Daftar mata kuliah tersedia semester genap" data={matakuliah}/>
+                    <PaperShow title="Daftar mata kuliah elektif tersedia semester genap/ganjil" data={matakuliah}/>
                     <PaperShow title="Mata Kuliah elektif yang tertarik diikuti" data={matakuliah}/>
                 </div>
-                
+                <Typography>{usernameFromLogin}</Typography>
             </div>
             
-        </React.Fragment>
+        </div>
     );
 }
 

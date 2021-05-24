@@ -5,13 +5,16 @@ import Divider from '@material-ui/core/Divider';
 
 const data = [
     {
+      id: 1,
       value: 10,
       label: 'Ten'
     },
     {
+        id: 2,
       value: 20,
       label: 'Twentyaaaaaaaaaaaaaaaaaaaaaaaa'
     },{
+        id: 3,
       value: 30,
       label: 'Thirty'
     },
@@ -70,7 +73,7 @@ const Dropdown = () => {
                         onChange={handleChange}
                         >
                             {data.map(it => (
-                                <MenuItem value={it.value}>{it.label} dan {it.value}</MenuItem>)
+                                <MenuItem value={it.id} key={it.id} >{it.label} dan {it.value}</MenuItem>)
                                 )}
                     </Select>
                 </FormControl>

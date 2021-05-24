@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,6 +7,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+
+import {AuthContext} from '../context/auth'
+
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -45,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ElevateAppBar(props) {
   const classes = useStyles();
+
+  const { logout } = useContext(AuthContext)
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -54,7 +60,7 @@ export default function ElevateAppBar(props) {
             <Typography variant="h6" className={classes.title}>
               Panduan Digital IPB
             </Typography>
-            <Button color="inherit">Logout</Button>
+            <Button color="inherit" onClick={logout}>Logout</Button>
           </Toolbar>
         </AppBar>
       </ElevationScroll>

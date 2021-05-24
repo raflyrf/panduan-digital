@@ -7,13 +7,17 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
 import Theme from './component/Theme';
 
+import { AuthProvider } from './context/auth'
+
 ReactDOM.render(
   <BrowserRouter>
-    <React.StrictMode>
+    {/* <React.StrictMode> */}
       <ThemeProvider theme={Theme}>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </ThemeProvider>
-    </React.StrictMode>
+    {/* </React.StrictMode> */}
   </BrowserRouter>,
   document.getElementById('root')
 );

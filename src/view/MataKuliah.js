@@ -18,8 +18,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const MataKuliah = () => {
+const MataKuliah = (props) => {
     const classes = useStyles();
+
+    const usernameFromDashboard = props.location.state.username
 
     return(
         <React.Fragment>
@@ -27,13 +29,24 @@ const MataKuliah = () => {
             <div className="side-nav">
                 <div className={classes.root}>
                     <List component="nav" aria-label="secondary mailbox folders">
-                        <Link to="/" style={link}>
+                        <Link to={{
+                            pathname: "/dashboard",
+                            state: {username: usernameFromDashboard}
+                        }}  
+                            style={link}>
+
                             <ListItem button>
                                     <ListItemText primary="Dashboard" />
                             </ListItem>
                         </Link>
                         
-                        <Link to="/matakuliah" style={link}>
+                        <Link to={{
+                            pathname: "/matakuliah",
+                            state: {username: usernameFromDashboard}
+                        }} 
+                            
+                            style={link}>
+
                             <ListItem button>
                                     <ListItemText primary="Mata Kuliah" />
                             </ListItem>
@@ -44,6 +57,7 @@ const MataKuliah = () => {
             
             <div className="matakuliah-view">
                     <Typography>ini buat Breadcrumb</Typography>
+                    <Typography>{usernameFromDashboard}</Typography>
                     <Dropdown />
             
             </div>
