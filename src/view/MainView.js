@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PaperDashboard from '../component/PaperDashboard';
 import PaperShow from '../component/PaperShow';
 import { Typography } from '@material-ui/core';
+// import { useJwt } from "react-jwt";
 
 const dummy = {
     jumlahElektif: 3,
@@ -125,8 +126,14 @@ const useStyles = makeStyles((theme) => ({
 const MainView = (props) => {
     const classes = useStyles();
     // console.log(props.location.state.username)
-    const usernameFromLogin = props.location.state.username
-
+    // const usernameFromLogin = props.location.state.username
+    const profile = JSON.parse(localStorage.getItem('token'))
+    // const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    // console.log(TOKEN)
+    // const { decodedToken, isExpired } = useJwt(name);
+    // console.log(decodedToken)
+    console.log(profile)
+    
     return(
         <div>
             <Header />
@@ -135,7 +142,7 @@ const MainView = (props) => {
                     <List component="nav" aria-label="secondary mailbox folders">
                         <Link to={{
                             pathname: "/dashboard",
-                            state: {username: usernameFromLogin}
+                            // state: {username: usernameFromLogin}
                         }}  
                             style={link}>
 
@@ -146,7 +153,7 @@ const MainView = (props) => {
                         
                         <Link to={{
                             pathname: "/matakuliah",
-                            state: {username: usernameFromLogin}
+                            // state: {username: usernameFromLogin}
                         }} 
                             
                             style={link}>
@@ -169,7 +176,8 @@ const MainView = (props) => {
                     <PaperShow title="Daftar mata kuliah elektif tersedia semester genap/ganjil" data={matakuliah}/>
                     <PaperShow title="Mata Kuliah elektif yang tertarik diikuti" data={matakuliah}/>
                 </div>
-                <Typography>{usernameFromLogin}</Typography>
+                {/* <Typography>{usernameFromLogin}</Typography> */}
+                <Typography>{profile.name}</Typography>
             </div>
             
         </div>

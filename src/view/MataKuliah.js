@@ -21,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
 const MataKuliah = (props) => {
     const classes = useStyles();
 
-    const usernameFromDashboard = props.location.state.username
+    // const usernameFromDashboard = props.location.state.username
+    const profile = JSON.parse(localStorage.getItem('token'))
+    console.log(profile)
 
     return(
         <React.Fragment>
@@ -31,7 +33,7 @@ const MataKuliah = (props) => {
                     <List component="nav" aria-label="secondary mailbox folders">
                         <Link to={{
                             pathname: "/dashboard",
-                            state: {username: usernameFromDashboard}
+                            // state: {username: usernameFromDashboard}
                         }}  
                             style={link}>
 
@@ -42,7 +44,7 @@ const MataKuliah = (props) => {
                         
                         <Link to={{
                             pathname: "/matakuliah",
-                            state: {username: usernameFromDashboard}
+                            // state: {username: usernameFromDashboard}
                         }} 
                             
                             style={link}>
@@ -57,7 +59,7 @@ const MataKuliah = (props) => {
             
             <div className="matakuliah-view">
                     <Typography>ini buat Breadcrumb</Typography>
-                    <Typography>{usernameFromDashboard}</Typography>
+                    <Typography>{profile.name}</Typography>
                     <Dropdown />
             
             </div>

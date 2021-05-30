@@ -14,7 +14,6 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom'
 import { AuthContext } from '../context/auth'
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -45,7 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const baseUrl = "https://reqres.in"
+// const baseUrl = "https://reqres.in"
+const baseUrl2 = "https://agrowing-api.herokuapp.com/"
 
 export default function Login() {
   const classes = useStyles();
@@ -66,18 +66,22 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     const user = {
-        username: username,
+        email: username,
         password: password
     }
 
         try {
-            const res = await axios.post(`${baseUrl}/api/login`, user)
-            localStorage.setItem("token", res.data.token)
-            // console.log(res)
-            // setUsername("")
-            // setPassword("")
+            const res = await axios.post(`${baseUrl2}api/v1/login`, user)
+            const profile = {
+              name: res.data.data.name,
+              role: res.data.data.role 
+            }
+            localStorage.setItem("token", JSON.stringify(profile))   
+            console.log(profile)
             loginSuccess()
+            
         } catch (err) {
+            console.log("FAILED")
             console.log(err.response)
             setUsername("")
             setPassword("")
@@ -85,11 +89,19 @@ export default function Login() {
         }
 
     }
-
-  if (isAuthenticated){
+  
+  // useEffect(() => {
+  //   console.log("di use  effect" + isAuthenticated)
+  // }) 
+  
+  if (isAuthenticated){   
+    localStorage.setItem("isLogin", isAuthenticated) 
+    console.log("di if" + isAuthenticated)
     return <Redirect to={{
       pathname: "/dashboard",
-      state: {username: username}
+      state: {
+        username: username
+      }
     }} />
   }  
 
