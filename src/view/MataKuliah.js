@@ -59,7 +59,7 @@ const MataKuliah = (props) => {
             
             <div className="matakuliah-view">
                     <Typography>ini buat Breadcrumb</Typography>
-                    <Typography>{profile.name}</Typography>
+                    <Typography>{profile.data.Nama}</Typography>
                     <Dropdown />
             
             </div>

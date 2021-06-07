@@ -20,11 +20,11 @@ const dummy = {
 const matakuliah = [
     {
         id:1,
-        nama: "KOM#@#"
+        nama: "KOM#@#sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
     },
     {
         id:2,
-        nama: "KO@3"
+        nama: "KO@asassssssssssssssssssssssssssssssssssssssssssssssssssssss3"
     },
     {
         id:3,
@@ -127,12 +127,12 @@ const MainView = (props) => {
     const classes = useStyles();
     // console.log(props.location.state.username)
     // const usernameFromLogin = props.location.state.username
-    const profile = JSON.parse(localStorage.getItem('token'))
     // const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
     // console.log(TOKEN)
     // const { decodedToken, isExpired } = useJwt(name);
     // console.log(decodedToken)
-    console.log(profile)
+    
+    // const profile = JSON.parse(localStorage.getItem('token'))
     
     return(
         <div>
@@ -177,7 +177,7 @@ const MainView = (props) => {
                     <PaperShow title="Mata Kuliah elektif yang tertarik diikuti" data={matakuliah}/>
                 </div>
                 {/* <Typography>{usernameFromLogin}</Typography> */}
-                <Typography>{profile.name}</Typography>
+                {/* <Typography>{profile.name}</Typography> */}
             </div>
             
         </div>

@@ -90,19 +90,20 @@ const PelajaranPage = (props) => {
             // ini nanti ke proses post database
             const newDataTertarik = {
                 id_peserta_tertarik: dataTertarik.length + 1,
-                username: JSON.parse(localStorage.getItem("token")).name,
+                username: JSON.parse(localStorage.getItem("token")).data.Nama,
                 // ini nanti ganti jadi nim
-                nim: JSON.parse(localStorage.getItem("token")).role,
+                nim: JSON.parse(localStorage.getItem("token")).data.NIM,
                 id_mata_kuliah: parseInt(props.match.params.id),
-                id_civitas_ipb: 99
+                id_civitas_ipb: JSON.parse(localStorage.getItem("token")).data.MahasiswaId
             }
 
             setDataTertarik([...dataTertarik, newDataTertarik])
             setIsTertarik(!isTertarik)
         } else {
             // dataTertarik harusnya diambil dari database
-            const harusnyaId = JSON.parse(localStorage.getItem("token")).name
-            setDataTertarik(dataTertarik.filter(item => item.username !== harusnyaId))
+            const idUser = JSON.parse(localStorage.getItem("token")).data.MahasiswaId
+            console.log(idUser)
+            setDataTertarik(dataTertarik.filter(item => item.id_civitas_ipb !== idUser))
             setIsTertarik(!isTertarik)
         }
         console.log(dataTertarik)
@@ -116,11 +117,11 @@ const PelajaranPage = (props) => {
         if(komentarValues.trim().length > 0){
             const newKomentarData = {
                 id_komentar: dataListKomentar.length + 1,
-                username: JSON.parse(localStorage.getItem("token")).name,
-                nim: JSON.parse(localStorage.getItem("token")).role,
+                username: JSON.parse(localStorage.getItem("token")).data.Nama,
+                nim: JSON.parse(localStorage.getItem("token")).data.NIM,
                 komentar: komentarValues,
                 id_mata_kuliah: parseInt(props.match.params.id),
-                id_civitas_ipb: 99
+                id_civitas_ipb: JSON.parse(localStorage.getItem("token")).data.MahasiswaId
             }
             setDataListKomentar([...dataListKomentar, newKomentarData])
             setKomentarValues("")

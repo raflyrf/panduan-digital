@@ -44,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-// const baseUrl = "https://reqres.in"
-const baseUrl2 = "https://agrowing-api.herokuapp.com/"
+// const baseUrl = "https://api.ipb.ac.id/"
+// const baseUrl2 = "https://agrowing-api.herokuapp.com/"
 
 export default function Login() {
   const classes = useStyles();
@@ -65,28 +65,50 @@ export default function Login() {
   };
 
   const handleSubmit = async (e) => {
-    const user = {
-        email: username,
-        password: password
-    }
 
-        try {
-            const res = await axios.post(`${baseUrl2}api/v1/login`, user)
-            const profile = {
-              name: res.data.data.name,
-              role: res.data.data.role 
-            }
-            localStorage.setItem("token", JSON.stringify(profile))   
-            console.log(profile)
-            loginSuccess()
+    var data = JSON.stringify({"Username":username,"Password":password});
+
+    var config = {
+      method: 'post',
+      url: 'https://api.ipb.ac.id/v1/Authentication/LoginMahasiswa',
+      headers: { 
+        'Content-Type': 'application/json', 
+        'X-IPBAPI-TOKEN': 'Bearer 62225dc6-925a-3bb6-af6c-45e427d7514c'
+      },
+      data : data
+    };
+
+    axios(config)
+    .then(function (response) {
+      console.log(response.data);
+      localStorage.setItem("token", JSON.stringify(response))
+      loginSuccess()
+    })
+    .catch(function (error) {
+      console.log(error);
+      setUsername("")
+      setPassword("")
+      loginFailed()
+    });
+
+        // try {
+        //     const res = await axios.post(config)
+        //     console.log(res)
+        //     const profile = {
+        //       name: res.data.data.name,
+        //       role: res.data.data.role 
+        //     }
+        //     localStorage.setItem("token", JSON.stringify(profile))   
+        //     console.log(profile)
+        //     loginSuccess()
             
-        } catch (err) {
-            console.log("FAILED")
-            console.log(err.response)
-            setUsername("")
-            setPassword("")
-            loginFailed()
-        }
+        // } catch (err) {
+        //     console.log("FAILED")
+        //     console.log(err.response)
+        //     setUsername("")
+        //     setPassword("")
+        //     loginFailed()
+        // }
 
     }
   
@@ -96,7 +118,7 @@ export default function Login() {
   
   if (isAuthenticated){   
     localStorage.setItem("isLogin", isAuthenticated) 
-    console.log("di if" + isAuthenticated)
+    console.log("di if " + isAuthenticated)
     return <Redirect to={{
       pathname: "/dashboard",
       state: {

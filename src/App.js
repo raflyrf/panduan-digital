@@ -33,7 +33,7 @@ function App() {
         <React.Fragment>
           <PrivateRoute path="/dashboard" exact component={MainView}/>
           <PrivateRoute path="/matakuliah" exact component={MataKuliah} /> 
-          <Route path="/matakuliah/:id" exact component={PelajaranPage} />       
+          <PrivateRoute path="/matakuliah/:id" exact component={PelajaranPage} />       
           <Route path="/" exact component={Login} />
         </React.Fragment>
    
