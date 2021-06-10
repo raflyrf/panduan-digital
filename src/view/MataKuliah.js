@@ -22,8 +22,8 @@ const MataKuliah = (props) => {
     const classes = useStyles();
 
     // const usernameFromDashboard = props.location.state.username
-    const profile = JSON.parse(localStorage.getItem('token'))
-    console.log(profile)
+    // const profile = JSON.parse(localStorage.getItem('token'))
+    // console.log(profile)
 
     return(
         <React.Fragment>
@@ -59,7 +59,7 @@ const MataKuliah = (props) => {
             
             <div className="matakuliah-view">
                     <Typography>ini buat Breadcrumb</Typography>
-                    <Typography>{profile.data.Nama}</Typography>
+                    {/* <Typography>{profile.data.Nama}</Typography> */}
                     <Dropdown />
             
             </div>

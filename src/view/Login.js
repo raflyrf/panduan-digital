@@ -44,9 +44,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-// const baseUrl = "https://api.ipb.ac.id/"
-// const baseUrl2 = "https://agrowing-api.herokuapp.com/"
-
 export default function Login() {
   const classes = useStyles();
 

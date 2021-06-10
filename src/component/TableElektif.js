@@ -35,7 +35,7 @@ export default function BasicTable({ dataTertarik, idMataKuliah }) {
             </TableHead>
             <TableBody>
             {filterData.map((item) => (
-                <TableRow key={item.id_peserta_tertarik} hover>
+                <TableRow key={item.id} hover>
                 <TableCell component="th" scope="row">
                     {item.nim}
                 </TableCell>

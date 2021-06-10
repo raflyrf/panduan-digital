@@ -3,91 +3,8 @@ import React, { useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import Divider from '@material-ui/core/Divider';
 import DATA from './dataDummy.js'
-import DATAMK from './dataDummyMataKuliah.js'
 import Table from './Table.js'
-// const DATA = [
-//     {
-//       id: 1,
-//       value: 10,
-//       label: 'Ten',
-//       fakultas: 'Pertanian',
-//       kodeDepartemen: 'A1',
-//       namaDepartemen: 'MANAJEMEN SUMBERDAYA LAHAN'
-//     },
-//     {
-//         id: 2,
-//       value: 20,
-//       label: 'Twentyaaaaaaaaaaaaaaaaaaaaaaaa',
-//       fakultas: 'Pertanian',
-//       kodeDepartemen: 'A2',
-//       namaDepartemen: 'AGRONOMI DAN HORTIKULTURA'
-//     },{
-//         id: 3,
-//       value: 30,
-//       label: 'Thirty',
-//       fakultas: 'Pertanian',
-//       kodeDepartemen: 'A3',
-//       namaDepartemen: 'PROTEKSI TANAMAN'
-//     },{
-//         id: 4,
-//       value: 40,
-//       label: 'Thirty',
-//       fakultas: 'Pertanian',
-//       kodeDepartemen: 'A4',
-//       namaDepartemen: 'ARSITEKTUR LANSKAP'
-//     },{
-//         id: 5,
-//       value: 50,
-//       label: 'Thirty',
-//       fakultas: 'Kedokteran Hewan',
-//       kodeDepartemen: 'B0',
-//       namaDepartemen: 'PROTEKSI TANAMAN'
-//     },{
-//         id: 6,
-//       value: 60,
-//       label: 'Thirty',
-//       fakultas: 'Perikanan',
-//       kodeDepartemen: 'C1',
-//       namaDepartemen: 'TEKNOLOGI & MANAJEMEN PERIKANAN BUDIDAYA'
-//     },{
-//         id: 7,
-//       value: 70,
-//       label: 'Thirty',
-//       fakultas: 'Pertanian',
-//       kodeDepartemen: 'C2',
-//       namaDepartemen: 'MANAJEMEN SUMBERDAYA PERAIRAN'
-//     },{
-//         id: 8,
-//       value: 80,
-//       label: 'Thirty',
-//       fakultas: 'Peternakan',
-//       kodeDepartemen: 'D1',
-//       namaDepartemen: 'TEKNOLOGI PRODUKSI TERNAK'
-//     },{
-//         id: 9,
-//       value: 90,
-//       label: 'Thirty',
-//       fakultas: 'Peternakan',
-//       kodeDepartemen: 'D2',
-//       namaDepartemen: 'NUTRISI DAN TEKNOLOGI PAKAN'
-//     },{
-//         id: 10,
-//       value: 100,
-//       label: 'Thirty',
-//       fakultas: 'Matematika dan Ilmu Pengetahuan Alam',
-//       kodeDepartemen: 'G1',
-//       namaDepartemen: 'STATISTIKA DAN SAINS DATA'
-//     },{
-//         id: 11,
-//       value: 110,
-//       label: 'Thirty',
-//       fakultas: 'Matematika dan Ilmu Pengetahuan Alam',
-//       kodeDepartemen: 'G6',
-//       namaDepartemen: 'ILMU KOMPUTER'
-//     },
-// ]
-
-
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -120,12 +37,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+var DATE = new Date();
+var YEAR = DATE.getFullYear();
 
 const Dropdown = () => {
     const classes = useStyles();
 
     const [dataDepartemen, setDataDepartemen] = useState("");
     const [selectedSubject, setSelectedSubject] = useState([])
+    const [kodeMK, setKodeMK] = useState("")
+    
     const handleChange = (e) => {
         setDataDepartemen(e.target.value);        
     }
@@ -134,13 +55,38 @@ const Dropdown = () => {
         e.preventDefault();
         console.log(dataDepartemen)
 
+        var config = {
+            method: 'get',
+            url: `https://api.ipb.ac.id/v1/MataKuliah/DepartemenSaya?TahunAkademik=${YEAR-1}/${YEAR}&Semester=All&Strata=S1`,
+            headers: { 
+              'X-IPBAPI-TOKEN': 'Bearer 62225dc6-925a-3bb6-af6c-45e427d7514c'
+            }
+          };
+          
+          axios(config)
+          .then(function (response) {
+            // console.log(response.data);
+            // console.log(response.data[0].Kode.substring(0,3));
+            
+            const selected = response.data.filter(item => item.Kode.substring(0,3).toLowerCase() === dataDepartemen.singkatanDepartemen.substring(0,3).toLowerCase())
+            setSelectedSubject(selected)
+            const KODE = selected[0].Kode.substring(0,3);
+            setKodeMK(KODE);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        
+        
+        
         // Pas submit nanti hanya memfilter DATAMK dengan
         // nama departemen yang sama dgn yang disubmit
-        const selected = DATAMK.filter(item => item.departemen.toLowerCase() === dataDepartemen.namaDepartemen.toLowerCase())
+        // const selected = DATAMK.filter(item => item.departemen.toLowerCase() === dataDepartemen.namaDepartemen.toLowerCase())
         
-        setSelectedSubject(selected)
+        // setSelectedSubject(selected)
     }
-
+    
+    console.log(kodeMK)
     return(
         <React.Fragment>
             <div className={classes.upper}>
@@ -168,11 +114,11 @@ const Dropdown = () => {
             <div className={classes.show}>
                 <Typography>Mayor</Typography>
                 <div className={classes.tableContainer}>
-                    <Table dataToShow={selectedSubject} type="Mayor" />
+                    <Table dataToShow={selectedSubject} type="Mayor" kode={kodeMK} />
                 </div>
                 <Typography>Elektif</Typography>
                 <div className={classes.tableContainer}>
-                    <Table dataToShow={selectedSubject} type="Elektif" />
+                    <Table dataToShow={selectedSubject} type="Elektif" kode={kodeMK} />
                 </div>
                 
             </div>

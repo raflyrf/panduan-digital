@@ -20,6 +20,7 @@ export const AuthProvider = (props) => {
         setAuth(false)    
         localStorage.clear()
         history.push("/")
+        window.location.reload();
     }
 
     return(
