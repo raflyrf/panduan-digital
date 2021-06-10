@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './MainView.css'
 import Header from '../component/Header'
 import { Link } from 'react-router-dom';
@@ -8,89 +8,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import PaperDashboard from '../component/PaperDashboard';
 import PaperShow from '../component/PaperShow';
+import PaperShowElektif from '../component/PaperShowElektif';
+import axios from 'axios';
 // import { Typography } from '@material-ui/core';
 // import { useJwt } from "react-jwt";
-
-const dummy = {
-    jumlahElektif: 3,
-    jumlahTertarik: 1,
-    semester: 3
-}
-
-const matakuliah = [
-    {
-        id:1,
-        nama: "KOM#@#sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
-    },
-    {
-        id:2,
-        nama: "KO@asassssssssssssssssssssssssssssssssssssssssssssssssssssss3"
-    },
-    {
-        id:3,
-        nama: "KOMqw@#"
-    },
-    {
-        id:4,
-        nama: "KOMqw@#"
-    },
-    {
-        id:5,
-        nama: "KOMqw@#"
-    },
-    {
-        id:6,
-        nama: "KOMqw@#"
-    },
-    {
-        id:7,
-        nama: "KOMqw@#"
-    },
-    {
-        id:8,
-        nama: "KOMqw@#"
-    },
-    {
-        id:9,
-        nama: "KOMqw@#"
-    },
-    {
-        id:10,
-        nama: "KOMqw@#"
-    },
-    {
-        id:11,
-        nama: "KOMqw@#"
-    },
-    {
-        id:12,
-        nama: "KOMqw@#"
-    },
-    {
-        id:13,
-        nama: "KOMqw@#"
-    },
-    {
-        id:14,
-        nama: "KOMqw@#"
-    },
-    {
-        id:15,
-        nama: "KOMqw@#"
-    },
-    {
-        id:16,
-        nama: "KOMqw@#"
-    },
-    {
-        id:17,
-        nama: "KOMqw@#"
-    },
-    {
-        id:18,
-        nama: "KOMqw@#"
-    }
-]
 
 
 const useStyles = makeStyles((theme) => ({
@@ -133,6 +54,62 @@ const MainView = (props) => {
     // console.log(decodedToken)
     
     // const profile = JSON.parse(localStorage.getItem('token'))
+    // const [jumlahElektifTersedia, setJumlahElektifTersedia] = useState(0);
+    const [dataTertarik, setDataTertarik] = useState([]);
+    const [dataElektif, setDataElektif] = useState([]);
+
+    const getData = () => {
+        var config = {
+            method: 'get',
+            url: 'http://127.0.0.1:8000/api/test-repo-elektif/',
+            headers: { 
+              'Content-Type': 'application/json'
+            },
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(response.data);
+            // setJumlahElektifTersedia(response.data.length)
+            setDataElektif(response.data);
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
+    const getTertarikElektif = () => {
+        var config = {
+            method: 'get',
+            url: 'http://127.0.0.1:8000/api/repo-list-tertarik/',
+            headers: { 
+              'Content-Type': 'application/json'
+            },
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(response.data);
+            setDataTertarik(response.data);
+            // console.log(JSON.parse(localStorage.getItem("token")).data.MahasiswaId)
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
+    useEffect(() => {
+        // getData();
+        // getTertarikElektif();
+    })
+
+    useEffect(() => {
+        getData();
+        getTertarikElektif();
+    }, [])
+
+    const elektifTertarikDiikuti = dataTertarik.filter(item => item.id_civitas_ipb === JSON.parse(localStorage.getItem("token")).data.MahasiswaId)
+    console.log(elektifTertarikDiikuti.length)
     
     return(
         <div>
@@ -168,13 +145,13 @@ const MainView = (props) => {
             
             <div className="dashboard-view">
                 <div className={classes.paper}>
-                    <PaperDashboard title="Jumlah elektif yang tersedia" counter={dummy.jumlahElektif} />
-                    <PaperDashboard title="Jumlah elektif yang tertarik untuk diikuti" counter={dummy.jumlahTertarik} />
-                    <PaperDashboard title="Semester saat ini" counter={dummy.semester}/>
+                    <PaperDashboard title="Jumlah elektif yang tersedia" counter={dataElektif.length} />
+                    <PaperDashboard title="Jumlah elektif yang tertarik untuk diikuti" counter={elektifTertarikDiikuti.length} />
+                    <PaperDashboard title="Semester saat ini" counter="Ga ada datanya"/>
                 </div>
                 <div className={classes.show}>
-                    <PaperShow title="Daftar mata kuliah elektif tersedia semester genap/ganjil" data={matakuliah}/>
-                    <PaperShow title="Mata Kuliah elektif yang tertarik diikuti" data={matakuliah}/>
+                    <PaperShow title="Daftar mata kuliah elektif tersedia semester" data={dataElektif}/>
+                    <PaperShowElektif title="Mata Kuliah elektif yang tertarik diikuti" dataElektif={dataElektif} dataTertarik={elektifTertarikDiikuti} />
                 </div>
                 {/* <Typography>{usernameFromLogin}</Typography> */}
                 {/* <Typography>{profile.name}</Typography> */}
