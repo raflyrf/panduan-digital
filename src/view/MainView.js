@@ -111,6 +111,23 @@ const MainView = (props) => {
     const elektifTertarikDiikuti = dataTertarik.filter(item => item.id_civitas_ipb === JSON.parse(localStorage.getItem("token")).data.MahasiswaId)
     console.log(elektifTertarikDiikuti.length)
     
+    const nim = JSON.parse(localStorage.getItem("token")).data.NIM
+    console.log(parseInt(nim.substring(3,5)))
+    const date = new Date()
+    const year = date.getFullYear()
+    const yearUser = 2000 + parseInt(nim.substring(3,5))
+    console.log(year)
+    const tingkat = year - yearUser
+    const bulan = date.getMonth() + 1
+    console.log(bulan)
+    var semester = 0
+    if( bulan >= 8 ){
+        semester = 2*tingkat+1
+    } else {
+        semester = 2*tingkat
+    }
+
+
     return(
         <div>
             <Header />
@@ -147,7 +164,7 @@ const MainView = (props) => {
                 <div className={classes.paper}>
                     <PaperDashboard title="Jumlah elektif yang tersedia" counter={dataElektif.length} />
                     <PaperDashboard title="Jumlah elektif yang tertarik untuk diikuti" counter={elektifTertarikDiikuti.length} />
-                    <PaperDashboard title="Semester saat ini" counter="Ga ada datanya"/>
+                    <PaperDashboard title="Semester saat ini" counter={semester}/>
                 </div>
                 <div className={classes.show}>
                     <PaperShow title="Daftar mata kuliah elektif tersedia semester" data={dataElektif}/>
